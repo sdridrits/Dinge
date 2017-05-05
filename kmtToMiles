@@ -1,0 +1,15 @@
+#include <iostream>
+using namespace std;
+
+void conversor(double start, double end, double step){
+	for(int i=0; i<end; i+=step){
+		int a=start+i;
+		cout<<start<<" "<<start*0.621371<<endl;
+	}
+}
+int main(){
+	double a, b, c;
+	cin>>a>>b>>c;
+	conversor(a,b,c);
+	return 0;
+}
