@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>TEST</title>
+		<script type="text/javascript">
+			function func(){
+				x = document.getElementById("box");
+				var input = x.value;
+				var arr = [x.value];
+				for(var i=0; i<x.value; i++){
+					for(var j=0; j<x.value; j++){
+						document.write(" o ");
+					}document.write("<br>");
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<h4>TEST:</h4>
+		<label>Character square: </label>
+		<br>
+		<input id="box" type="text">
+		<input type="button" value="go!" onclick="func();">
+	</body>
+</html>
