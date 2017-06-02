@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head><title>Sorting Visualized</title>
+<h2>test</h2></head><body></body>
+
+<canvas id="background" width="720" height="720"></canvas>
+<script type="text/javascript">
+	var xpos = 0;
+	var ypos = 0;
+	var size = 30;
+	window.onload = function() {
+		canvas=document.getElementById('background');
+		context=canvas.getContext('2d');
+		setInterval(square,50);
+		back();
+	}
+	function back() {
+		context.fillStyle = 'grey';
+		context.fillRect(0,0,canvas.width,canvas.height);
+	}
+
+	function square() {
+		var foo = Math.floor((Math.random()*2) + 0);
+		//size = 60 * Math.floor((Math.random()*12)+1);
+		xpos = Math.floor((Math.random()*canvas.width/size) + 0)*size;
+		ypos = Math.floor((Math.random()*canvas.height/size) + 0)*size;
+		//xpos = Math.floor((Math.random()*canvas.width) + 0);
+		//ypos = Math.floor((Math.random()*canvas.height) + 0);
+		var color = foo.toString();
+		//context.fillStyle = '#' + color + 'ff' + color;
+		if(foo==1) {
+			context.fillStyle = 'black';
+		}else {
+			context.fillStyle = 'white';
+		}
+		context.fillRect(xpos,ypos,size,size);
+	}
+
+
+
+</script>
+</html>
