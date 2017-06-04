@@ -1,0 +1,114 @@
+<html>
+<head><p><head><h2>Cellular automata</h2></head><hr></p>by Picho<br><br>Enter a number:
+	<input id="box" type="number" onkeydown = "if(event.keyCode == 13){document.getElementById('idPrint').click()}"> <!--onkeyup="func();"-->
+	<input id="idPrint" type="button" value="Print" onclick="func();"> <br>
+	<small>Try with: 25, 30, 45 ,57, 75, 90, 101, 105, 107, 121, 125, 135, 145, 147, 161, 182, 193, 214, 225, 227 y 246.</small>
+	<a href="http://mathworld.wolfram.com/ElementaryCellularAutomaton.html">More info on Wolfram's mathworld.</a>
+<canvas id="canvas" width="1440" height="540"></canvas>
+<body>
+<script type="text/javascript">
+
+function func() {
+
+	grid=document.getElementById("canvas");
+	gridLook=grid.getContext("2d");
+	//var width = grid.width;
+	//var height = grid.height;
+
+	//gridLook.fillStyle = "white";
+	//gridLook.fillRect(0,0,grid.width,grid.height);
+
+	var cells = [];
+	var generation;
+
+	var w=1; //Size of each cell
+	var ngens = 500;//grid.height/w;; //Number of generations
+	//ruleset = [0,1,0,1,1,0,1,0]; //Enter here the new rule
+
+	var ruleset = [0,0,0,0,0,0,0,0];
+	var x;
+	x = document.getElementById("box");
+	console.log(x.value);
+	var rule = parseInt(x.value);
+	console.log(typeof rule);
+	function dec2bin(num) {
+		return num.toString(2);
+	}
+
+	//var rule=30; //Change this to get patterns 30, 90, 135
+	
+	//Base 10 to base 2 converter (always 8 bits):
+	//var bin = rule.toString(2);
+	var bin = dec2bin(rule);
+	if(bin.length<8) {
+		while(bin.length<8) {
+			bin = "0" + bin;
+			console.log(bin);
+		}
+	}
+	for(i = 0; i < bin.length; i++) {
+		ruleset[i] = bin.substring(i,i+1);
+		console.log(ruleset[i]);
+	}
+
+
+
+	cells = new Array(grid.width/w); //Declaring first generation cells
+	for(i=0; i<cells.length; i++) { //Filling with zeros
+		cells[i] = 0;
+	}
+
+	cells[cells.length/2] = 1; //STARTING CELL
+	generation = 0; //The first one
+
+	//THE GENERATOR!!
+	for(j=0; j < ngens; j++) { //Number of generations
+		display(cells);
+		generate();
+	}
+
+	//To create a new generation:
+	function generate() {
+		//console.log("reached generate.");
+		nextGen = new Array(cells.length); //New Array for new values
+		for(var i=1; i<cells.length-1; i++) {
+			var left = cells[i-1]; //Left neighbor state
+			var medium = cells[i]; //Current state
+			var right = cells[i+1]; //Right neighbor state
+			nextGen[i] = rules(left, medium, right);
+			//display(nextGen);
+		}
+		cells = nextGen;
+		generation++;
+		display(nextGen);
+	}	
+
+	//Display:
+	function display(cells) {
+		for(i=0; i< cells.length; i++) {
+			if (cells[i] == 1) {
+				gridLook.fillStyle = "black";
+				//console.log("It worked!")
+			}else {
+				gridLook.fillStyle = "white";
+			}
+			gridLook.fillRect(i*w, generation*w, w, w);
+		}
+	}
+
+
+	function rules(a, b, c) { //Rules
+		if (a==1 && b==1 && c==1) return ruleset[0];
+		if (a==1 && b==1 && c==0) return ruleset[1];
+		if (a==1 && b==0 && c==1) return ruleset[2];
+		if (a==1 && b==0 && c==0) return ruleset[3];
+		if (a==0 && b==1 && c==1) return ruleset[4];
+		if (a==0 && b==1 && c==0) return ruleset[5];
+		if (a==0 && b==0 && c==1) return ruleset[6];
+		if (a==0 && b==0 && c==0) return ruleset[7];
+	}
+}
+
+</script>
+</body>
+</html>
